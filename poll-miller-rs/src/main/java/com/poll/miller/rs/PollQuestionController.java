@@ -1,5 +1,7 @@
 package com.poll.miller.rs;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +21,13 @@ import io.swagger.annotations.ApiOperation;
 public class PollQuestionController {
 	
 	@Autowired PollQuestionRepo pollQuestionRepo;
+	
+	@ApiOperation(value = "List all Poll Questions")
+	//@RequestMapping(value="/{customerId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/pollQuestions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<PollQuestion> getPollQuestions() {
+		return pollQuestionRepo.getPollQuestions();
+	}
 	
 	@ApiOperation(value = "Find Poll Question by Id", notes = "Get Poll Question by specifying Id", httpMethod = "GET", response = PollQuestion.class)
 	//@RequestMapping(value="/{customerId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

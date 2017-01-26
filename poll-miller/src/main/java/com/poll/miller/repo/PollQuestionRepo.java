@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,12 @@ public class PollQuestionRepo {
 		Query queryQuesById = em.createNamedQuery("findAllQuesById");
 		queryQuesById.setParameter("qId", 1);
 		List qs = queryQuesById.getResultList();
+		return qs;
+	}
+
+	public List<PollQuestion> getPollQuestions() {
+		Query query = em.createQuery("SELECT q FROM POLL.TPOLQUES q", PollQuestion.class);
+		List qs = query.getResultList();
 		return qs;
 	}
 }
