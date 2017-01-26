@@ -1,10 +1,12 @@
 package com.poll.miller.repo;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,5 +33,13 @@ public class PollQuestionRepo {
 	@Transactional(rollbackFor=Exception.class)
 	public PollQuestion getPollQuestionById(Integer pollQuestionId) {
 		return em.find(PollQuestion.class, pollQuestionId);
+	}
+	
+	@Transactional
+	public List<PollQuestion> getAllQues() {
+		Query queryQuesById = em.createNamedQuery("findAllQuesById");
+		queryQuesById.setParameter("qId", 1);
+		List qs = queryQuesById.getResultList();
+		return qs;
 	}
 }

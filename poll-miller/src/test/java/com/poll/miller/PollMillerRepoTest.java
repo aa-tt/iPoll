@@ -16,7 +16,6 @@ import com.poll.miller.repo.PollQuestionRepo;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AppConfig.class)
 //@SpringApplicationConfiguration(classes = AppPersistenceConfig.class)
-
 public class PollMillerRepoTest {
 	
     @Autowired
@@ -42,10 +41,16 @@ public class PollMillerRepoTest {
     }*/
     
     @Test
-    public void testCustomerDAO_getCustomerById() {
+    public void testPollQuestionRepo_registerPollQuestion() {
     	
     	PollQuestion pollQuestion = new PollQuestion();
     	//System.out.println(pollQuestionRepo.registerPollQuestion(pollQuestion));
     	pollQuestionRepo.registerPollQuestion(pollQuestion);
+    }
+    
+    @Test
+    public void testPollQuestionRepo_getPollQuestionById() {
+    	
+    	System.out.println(pollQuestionRepo.getAllQues());
     }
 }
