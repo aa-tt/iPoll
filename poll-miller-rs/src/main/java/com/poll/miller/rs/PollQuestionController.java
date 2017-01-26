@@ -23,7 +23,6 @@ public class PollQuestionController {
 	@Autowired PollQuestionRepo pollQuestionRepo;
 	
 	@ApiOperation(value = "List all Poll Questions")
-	//@RequestMapping(value="/{customerId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@RequestMapping(value="/pollQuestions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<PollQuestion> getPollQuestions() {
 		return pollQuestionRepo.getPollQuestions();
@@ -36,7 +35,6 @@ public class PollQuestionController {
 		return pollQuestionRepo.getPollQuestionById(pollQuestionId);
 	}
 	
-	//@ApiOperation(value = "Register a Poll", notes = "create/update a Poll Question", httpMethod = "POST", response = String.class)
 	@ApiOperation(value = "Register a Poll")
 	@RequestMapping(value="/pollQuestion", method = RequestMethod.POST, consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> createUpdatePollQuestion(@RequestBody PollQuestion pollQuestion) {
@@ -45,7 +43,19 @@ public class PollQuestionController {
 			return new ResponseEntity<String>("Suck Not", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String> ("It Sucked", HttpStatus.INTERNAL_SERVER_ERROR);
+		}		
+	}
+	
+	@ApiOperation(value = "Delete a Poll")
+	@RequestMapping(value="/pollQuestion/{pollQuestionId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> deletePollQuestion(@PathVariable Integer pollQuestionId) {
+		String message = "Poll Not Removed";
+		try {
+			message = this.pollQuestionRepo.removePollQuestion(pollQuestionId);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<String> (message, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+		return new ResponseEntity<String>(message, HttpStatus.OK);
 	}
 }

@@ -49,4 +49,16 @@ public class PollQuestionRepo {
 		List qs = query.getResultList();
 		return qs;
 	}
+
+	@Transactional
+	public String removePollQuestion(Integer pollQuestionId) {
+		
+		PollQuestion q = em.find(PollQuestion.class, pollQuestionId);
+		try{
+			if(q != null) em.remove(q);
+		}catch(Exception e){
+			return(e.getMessage());
+		}
+		return("Poll Removed");
+	}
 }
