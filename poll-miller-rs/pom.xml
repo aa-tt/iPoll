@@ -211,6 +211,31 @@
 	    <version>2.2.7</version>
 	</dependency>
 	
+	<!-- The Simple Logging Facade for Java or (SLF4J) serves as a simple facade or abstraction 
+	for various logging frameworks, e.g. java.util.logging, log4j and logback, allowing the end 
+	user to plug in the desired logging framework at deployment time. -->
+    <dependency>
+    	<groupId>org.slf4j</groupId>
+    	<artifactId>slf4j-api</artifactId>
+    	<version>1.7.21</version>
+    	<type>jar</type>
+    	<scope>compile</scope>
+    </dependency> 
+    <dependency>
+    	<groupId>org.slf4j</groupId>
+    	<artifactId>slf4j-log4j12</artifactId>
+    	<version>1.7.21</version>
+    	<type>jar</type>
+    	<scope>compile</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.slf4j</groupId>
+    	<artifactId>jcl-over-slf4j</artifactId>
+    	<version>1.7.21</version>
+    	<type>jar</type>
+    	<scope>compile</scope>
+    </dependency>
+	
   </dependencies>
   <build>
     <finalName>poll-miller-rs</finalName>

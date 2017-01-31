@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Date;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,7 @@ public class PollRSTest {
     	this.mockMvc =  MockMvcBuilders.standaloneSetup(pollQuestionController).build();
     }
     
+    //@Ignore
     @Test
     public void findQuestionById_Test() throws Exception {
     	
@@ -51,6 +53,7 @@ public class PollRSTest {
         			.andExpect(jsonPath("$.quesId").value(1));
     }
     
+    //@Ignore
     @Test
     public void createUpdatePollQuestion_Test() throws Exception {
     	

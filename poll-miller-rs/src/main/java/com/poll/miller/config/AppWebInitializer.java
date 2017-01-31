@@ -1,8 +1,5 @@
 package com.poll.miller.config;
 
-import java.util.EnumSet;
-
-import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
@@ -10,6 +7,7 @@ import javax.servlet.ServletRegistration;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
 
@@ -33,13 +31,16 @@ public class AppWebInitializer implements WebApplicationInitializer {
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
         
+        /*FilterRegistration.Dynamic springSecurityFilterChain = container.addFilter("springSecurityFilterChain", DelegatingFilterProxy.class);
+        springSecurityFilterChain.addMappingForUrlPatterns(null, false, "/pollQuestion*");*/
+        
         /*FilterRegistration.Dynamic filter1 = container.addFilter("securityFilter1", new DelegatingFilterProxy());
         filter1.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false, "/*");*/
         
-        FilterRegistration.Dynamic filter2 = container.addFilter("securityFilter2", new CORSFilter());
+       /* FilterRegistration.Dynamic filter2 = container.addFilter("securityFilter2", new CORSFilter());
         filter2.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false, "/*");
         filter2.setInitParameter("allowedHeaders", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin");
-        filter2.setInitParameter("allowCredentials", "true");
+        filter2.setInitParameter("allowCredentials", "true");*/
         
     }
  }

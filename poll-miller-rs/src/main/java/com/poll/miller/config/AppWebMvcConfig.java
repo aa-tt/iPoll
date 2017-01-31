@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -17,11 +18,15 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import com.poll.miller.config.AppConfig;
+
 @EnableWebMvc
 @Configuration
-@ComponentScan({ "com.poll.miller.rs", "com.poll.miller.repo" })
+@ComponentScan({ "com.poll.miller.rs", "com.poll.miller.repo"})//, "com.poll.miller.security" })
 //@EnableSwagger2
-@Import({SwaggerConfig.class, AppConfig.class, AppBasicSecurityConfig.class})
+@Import({SwaggerConfig.class, AppConfig.class})//, RestSecurityConfig.class})//AppBasicSecurityConfig.class})
+@ImportResource({"classpath:/app-trace.xml"})
+//@ImportResource({"classpath:/rs-security.xml"})
 //@EnableAutoConfiguration
 public class AppWebMvcConfig extends WebMvcConfigurerAdapter{
 //public class AppWebConfig extends WebMvcConfigurationSupport{

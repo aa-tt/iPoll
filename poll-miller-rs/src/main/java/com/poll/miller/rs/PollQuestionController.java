@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.poll.miller.model.PollQuestion;
 import com.poll.miller.repo.PollQuestionRepo;
 
@@ -40,6 +41,30 @@ public class PollQuestionController {
 	public ResponseEntity<String> createUpdatePollQuestion(@RequestBody PollQuestion pollQuestion) {
 		try {
 			this.pollQuestionRepo.registerPollQuestion(pollQuestion);
+			return new ResponseEntity<String>("Suck Not", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String> ("It Sucked", HttpStatus.INTERNAL_SERVER_ERROR);
+		}		
+	}
+	
+	@ApiOperation(value = "Edit a Poll")
+	@RequestMapping(value="/pollQuestion/{pollQuestionId}", method = RequestMethod.PUT, consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> editPollQuestion(@PathVariable Integer pollQuestionId, @RequestBody PollQuestion pollQuestion) {
+		try {
+			System.out.println("PUT--" + new ObjectMapper().writeValueAsString(pollQuestion));
+			this.pollQuestionRepo.editPollQuestion(pollQuestionId, pollQuestion);
+			return new ResponseEntity<String>("Suck Not", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String> ("It Sucked", HttpStatus.INTERNAL_SERVER_ERROR);
+		}		
+	}
+	
+	@ApiOperation(value = "Patch a Poll")
+	@RequestMapping(value="/pollQuestion/{pollQuestionId}", method = RequestMethod.PATCH, consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> patchPollQuestion(@PathVariable Integer pollQuestionId, @RequestBody PollQuestion pollQuestion) {
+		try {
+			System.out.println("PATCH--" + new ObjectMapper().writeValueAsString(pollQuestion));
+			this.pollQuestionRepo.editPollQuestion(pollQuestionId, pollQuestion);
 			return new ResponseEntity<String>("Suck Not", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String> ("It Sucked", HttpStatus.INTERNAL_SERVER_ERROR);

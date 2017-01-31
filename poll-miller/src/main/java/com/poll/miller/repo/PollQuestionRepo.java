@@ -46,7 +46,8 @@ public class PollQuestionRepo {
 
 	public List<PollQuestion> getPollQuestions() {
 		Query query = em.createQuery("SELECT q FROM POLL.TPOLQUES q", PollQuestion.class);
-		List qs = query.getResultList();
+		List<PollQuestion> qs = query.getResultList();
+		//qs.sort((q1, q2)-> ((PollQuestion) q1).getQuesText().compareTo(((PollQuestion) q2).getQuesText()));
 		return qs;
 	}
 
@@ -60,5 +61,12 @@ public class PollQuestionRepo {
 			return(e.getMessage());
 		}
 		return("Poll Removed");
+	}
+
+	@Transactional
+	public void editPollQuestion(Integer pollQuestionId, PollQuestion pollQuestion) {
+		PollQuestion q = em.find(PollQuestion.class, pollQuestionId);
+		q.setQuesText(pollQuestion.getQuesText());
+		em.merge(q);
 	}
 }
