@@ -43,7 +43,7 @@ public class PollRSTest {
     	this.mockMvc =  MockMvcBuilders.standaloneSetup(pollQuestionController).build();
     }
     
-    //@Ignore
+    @Ignore
     @Test
     public void findQuestionById_Test() throws Exception {
     	
@@ -53,7 +53,7 @@ public class PollRSTest {
         			.andExpect(jsonPath("$.quesId").value(1));
     }
     
-    //@Ignore
+    @Ignore
     @Test
     public void createUpdatePollQuestion_Test() throws Exception {
     	

@@ -21,14 +21,15 @@ public class PollQuestionRepo {
 	@PersistenceContext EntityManager em;
 	
 	@Transactional(rollbackFor=Exception.class)
-	public void registerPollQuestion(PollQuestion pollQuestion) {
-		Set<PollAnswer> pollAnswers = new HashSet<PollAnswer>();
+	public Integer registerPollQuestion(PollQuestion pollQuestion) {
+		/*Set<PollAnswer> pollAnswers = new HashSet<PollAnswer>();
 		PollAnswer pollAnswer = new PollAnswer();
 		
 		pollAnswers.add(pollAnswer);
-		pollQuestion.setPollAnswers(pollAnswers);
-		em.persist(pollQuestion);
+		pollQuestion.setPollAnswers(pollAnswers);*/
+		em.merge(pollQuestion);
 		if(em.contains(pollQuestion)) System.out.println("poll question created, questionId-> " + pollQuestion.getQuesId());
+		return(pollQuestion.getQuesId());
 	}
 	
 	@Transactional(rollbackFor=Exception.class)
@@ -68,5 +69,11 @@ public class PollQuestionRepo {
 		PollQuestion q = em.find(PollQuestion.class, pollQuestionId);
 		q.setQuesText(pollQuestion.getQuesText());
 		em.merge(q);
+	}
+
+	public List<String> getCategories() {
+		TypedQuery<String> query = em.createQuery("SELECT DISTINCT categoryName from POLL.TPOLCATG", String.class);
+		List<String> categories = query.getResultList();
+		return categories;
 	}
 }

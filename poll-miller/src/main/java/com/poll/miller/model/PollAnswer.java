@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,7 +19,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class PollAnswer implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	//@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "answ_seq")
+	@SequenceGenerator(name = "answ_seq", sequenceName = "answ_seq", initialValue = 1, allocationSize = 1)	
 	@Id @Column(name="answ_id")
 	private Integer answId;
 	@Column(name="answ_body", length=20)
@@ -30,8 +33,8 @@ public class PollAnswer implements Serializable {
 	@Column(name="upd_date")
 	private Date updDate;
 	
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinColumn(name = "ques_id")
+	@ManyToOne
+	@JoinColumn(name = "ques_id", referencedColumnName = "ques_id")
 	@JsonIgnore
 	private PollQuestion pollQuestion;
 

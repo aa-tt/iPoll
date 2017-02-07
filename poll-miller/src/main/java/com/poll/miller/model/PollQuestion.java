@@ -11,8 +11,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 @Entity(name="POLL.TPOLQUES")
 //@JsonAutoDetect
@@ -20,12 +22,14 @@ import javax.persistence.OneToMany;
 public class PollQuestion implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	//@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "ques_seq")
+	@SequenceGenerator(name = "ques_seq", sequenceName = "ques_seq", initialValue = 1, allocationSize = 1)
 	@Id @Column(name="ques_id")
 	private Integer quesId;
-	@Column(name="ques_text", length=20)
+	@Column(name="ques_text", length=256)
 	private String quesText;
-	@Column(name="ques_desc", length=20)
+	@Column(name="ques_desc", length=256)
 	private String quesDesc;
 	@Column(name="crt_date")
 	private Date crtDate;
@@ -43,10 +47,18 @@ public class PollQuestion implements Serializable {
 	private Integer passcode;
 	
 	@OneToMany(fetch = FetchType.EAGER,
-			targetEntity=PollAnswer.class, 
-			mappedBy = "pollQuestion", 
-			cascade=CascadeType.ALL)
+			//targetEntity=PollAnswer.class, 
+			//mappedBy = "pollQuestion", 
+			cascade= CascadeType.ALL)
+	@JoinColumn(name = "ques_id")
 	private Set<PollAnswer> pollAnswers;
+	
+	@OneToMany(fetch = FetchType.EAGER,
+			targetEntity=PollCategory.class, 
+			//mappedBy = "pollQuestion", 
+			cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinColumn(name = "ques_id")
+	private Set<PollCategory> pollCategories;
 
 	public Integer getQuesId() {
 		return quesId;
@@ -54,14 +66,6 @@ public class PollQuestion implements Serializable {
 
 	public void setQuesId(Integer quesId) {
 		this.quesId = quesId;
-	}
-
-	public Set<PollAnswer> getPollAnswers() {
-		return pollAnswers;
-	}
-
-	public void setPollAnswers(Set<PollAnswer> pollAnswers) {
-		this.pollAnswers = pollAnswers;
 	}
 
 	public String getQuesText() {
@@ -134,5 +138,21 @@ public class PollQuestion implements Serializable {
 
 	public void setPasscode(Integer passcode) {
 		this.passcode = passcode;
+	}
+
+	public Set<PollAnswer> getPollAnswers() {
+		return pollAnswers;
+	}
+
+	public void setPollAnswers(Set<PollAnswer> pollAnswers) {
+		this.pollAnswers = pollAnswers;
+	}
+
+	public Set<PollCategory> getPollCategories() {
+		return pollCategories;
+	}
+
+	public void setPollCategories(Set<PollCategory> pollCategories) {
+		this.pollCategories = pollCategories;
 	}
 }
